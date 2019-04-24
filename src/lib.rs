@@ -1,6 +1,9 @@
 #![deny(unsafe_code)]
 #![doc(html_root_url = "https://docs.rs/indexmap/1/")]
-#![cfg_attr(not(has_std), no_std)]
+//#![cfg_attr(not(has_std), no_std)]
+#![cfg_attr(all(feature = "mesalock_sgx",
+                not(target_env = "sgx")), no_std)]
+#![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
 
 //! [`IndexMap`] is a hash table where the iteration order of the key-value
 //! pairs is independent of the hash values of the keys.
@@ -51,6 +54,12 @@
 //! - Macros [`indexmap!`] and [`indexset!`] are unavailable without `std`.
 //!
 //! [def]: map/struct.IndexMap.html#impl-Default
+
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
+
+use std::prelude::v1::*;
 
 #[cfg(not(has_std))]
 #[macro_use(vec)]

@@ -1,6 +1,8 @@
 //! `IndexMap` is a hash table where the iteration order of the key-value
 //! pairs is independent of the hash values of the keys.
 
+use std::prelude::v1::*;
+
 #[cfg(not(has_std))]
 use alloc::boxed::Box;
 #[cfg(not(has_std))]
