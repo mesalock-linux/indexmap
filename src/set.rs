@@ -1,5 +1,7 @@
 //! A hash set implemented using `IndexMap`
 
+use std::prelude::v1::*;
+
 #[cfg(feature = "rayon")]
 pub use crate::rayon::set as rayon;
 

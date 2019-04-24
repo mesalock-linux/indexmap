@@ -77,12 +77,20 @@
 //!
 //! [def]: map/struct.IndexMap.html#impl-Default
 
-#[cfg(not(has_std))]
-extern crate alloc;
+#![cfg_attr(all(target_env = "sgx", target_vendor = "mesalock"), feature(rustc_private))]
 
-#[cfg(has_std)]
+#[cfg(all(feature = "mesalock_sgx", not(target_env = "sgx")))]
+#[macro_use]
+extern crate sgx_tstd as std;
+
+#[cfg(target_env = "sgx")]
 #[macro_use]
 extern crate std;
+
+use std::prelude::v1::*;
+
+#[cfg(not(has_std))]
+extern crate alloc;
 
 #[cfg(not(has_std))]
 use alloc::vec::{self, Vec};
